@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     const entryDate = document.getElementById("entryDate");
     const entryText = document.getElementById("entryText");
@@ -9,10 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadEntries() {
         const entries = JSON.parse(localStorage.getItem("diaryEntries")) || [];
         entryList.innerHTML = "";
-        entries.forEach(entry => {
+        entries.forEach((entry, index) => {
             const li = document.createElement("li");
-            li.innerHTML = `<strong>${entry.date}:</strong> ${entry.text}`;
+            li.innerHTML = `<strong>${entry.date}:</strong> ${entry.text} 
+                <button class="deleteEntry" data-index="${index}">❌</button>`;
             entryList.appendChild(li);
+        });
+
+        // Add delete event listeners
+        document.querySelectorAll(".deleteEntry").forEach(button => {
+            button.addEventListener("click", deleteEntry);
         });
     }
 
@@ -34,6 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
         entryText.value = "";
         loadEntries();
     });
+
+    // Delete an entry
+    function deleteEntry(event) {
+        const index = event.target.dataset.index;
+        let entries = JSON.parse(localStorage.getItem("diaryEntries")) || [];
+        entries.splice(index, 1);
+        localStorage.setItem("diaryEntries", JSON.stringify(entries));
+        loadEntries();
+    }
 
     // Dark mode toggle
     themeToggle.addEventListener("click", () => {
