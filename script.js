@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const entryDate = document.getElementById("entryDate");
     const entryText = document.getElementById("entryText");
@@ -63,4 +62,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     loadEntries();
+});
+
+
+document.getElementById("searchEntry").addEventListener("input", function () {
+    const searchTerm = this.value.toLowerCase();
+    const entries = JSON.parse(localStorage.getItem("diaryEntries")) || [];
+    entryList.innerHTML = "";
+    
+    entries
+        .filter(entry => entry.text.toLowerCase().includes(searchTerm))
+        .forEach((entry, index) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<strong>${entry.date}:</strong> ${entry.text} 
+                <button class="deleteEntry" data-index="${index}">❌</button>`;
+            entryList.appendChild(li);
+        });
+
+    // Add delete event listeners again
+    document.querySelectorAll(".deleteEntry").forEach(button => {
+        button.addEventListener("click", deleteEntry);
+    });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const loginScreen = document.getElementById("loginScreen");
+    const diaryApp = document.getElementById("diaryApp");
+    const passwordInput = document.getElementById("passwordInput");
+    const loginButton = document.getElementById("loginButton");
+
+    const correctPassword = "mypassword"; // Change this to your preferred password
+
+    loginButton.addEventListener("click", () => {
+        if (passwordInput.value === correctPassword) {
+            loginScreen.style.display = "none";
+            diaryApp.style.display = "block";
+        } else {
+            alert("Incorrect password! Try again.");
+        }
+    });
 });
