@@ -7,12 +7,24 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="loginScreen">
+    <h2>Enter Password</h2>
+    <input type="password" id="passwordInput">
+    <button id="loginButton">Login</button>
+</div>
+
+<div id="diaryApp" style="display: none;">
+    <!-- Existing diary UI here -->
+</div>
+    
     <div class="container">
+        
+        
         <header>
             <h1>Digital Diary</h1>
             <button id="themeToggle">🌙</button>
         </header>
-        
+        <input type="text" id="searchEntry" placeholder="Search entries...">
         <main>
             <input type="date" id="entryDate">
             <textarea id="entryText" placeholder="Write your thoughts..."></textarea>
